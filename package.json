@@ -1,13 +1,18 @@
 {
   "name": "portfoliotest",
   "version": "1.0.0",
-  "description": "",
+  "description": "My portfolio site",
   "main": "index.html",
   "scripts": {
-    "test": "\"echo \\\"Error: no test specified\\\" && exit 1\""
+    "start": "live-server --port=3000 --entry-file=index.html"
+  },
+  "author": "Your Name",
+  "license": "ISC",
+  "devDependencies": {
+    "live-server": "^1.2.1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ZRJul/portfolioTest.git"
+    "url": "https://github.com/ZRJul/portfolioTest.git"
   }
 }
