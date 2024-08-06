@@ -5,7 +5,6 @@ use PHPMailer\PHPMailer\Exception;
 require 'phpmailer/src/Exception.php';
 require 'phpmailer/src/PHPMailer.php';
 
-
 // Получаем порт из переменной окружения
 $port = getenv('PORT') ? getenv('PORT') : 3000;
 
