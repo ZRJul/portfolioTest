@@ -1,8 +1,22 @@
-"use strict"
+"use strict";
 
-document.addEventListener('DOMContentLoaded', function (){
+document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('form');
+    const modal = document.getElementById('modal');
+    const closeModalButtons = document.querySelectorAll('.close_modal');
+
     form.addEventListener('submit', formSend);
+
+    // Обработчик для закрытия модального окна
+    closeModalButtons.forEach(button => {
+        button.addEventListener('click', closeModal);
+    });
+
+    modal.addEventListener('click', function (e) {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
 
     async function formSend(e) {
         e.preventDefault();
@@ -23,12 +37,21 @@ document.addEventListener('DOMContentLoaded', function (){
                 alert(result.message);
                 formPreview.innerHTML = '';
                 form.reset();
+                closeModal(); // Закрываем модальное окно
             } else {
                 alert('Error');
             }
         } else {
-            alert ('Please enter data in the required fields');
+            alert('Please enter data in the required fields');
         }
+    }
+
+    function closeModal() {
+        console.log('Closing modal and resetting form'); // Для отладки
+        modal.classList.remove('modal_open'); // Закрываем модальное окно
+        form.reset(); // Очищаем форму
+        const formReq = document.querySelectorAll('._req');
+        formReq.forEach(input => formRemoveError(input)); // Убираем ошибки
     }
 
     function formValidate(form) {
@@ -40,15 +63,16 @@ document.addEventListener('DOMContentLoaded', function (){
             formRemoveError(input);
 
             if (input.classList.contains('_email')) {
-                if (emailTest(input)){
+                if (emailTest(input)) {
                     formAddError(input);
                     error++;
-                } else  {
-                    if (input.value === '') {
-                        formAddError(input);
-                        error++;
-                    }
+                } else if (input.value === '') {
+                    formAddError(input);
+                    error++;
                 }
+            } else if (input.value === '') { // Проверка на пустые поля
+                formAddError(input);
+                error++;
             }
         }
         return error;
@@ -59,7 +83,7 @@ document.addEventListener('DOMContentLoaded', function (){
         input.classList.add('_error');
     }
 
-    function formRemoveError (input) {
+    function formRemoveError(input) {
         input.parentElement.classList.remove('_error');
         input.classList.remove('_error');
     }
@@ -69,4 +93,4 @@ document.addEventListener('DOMContentLoaded', function (){
     }
 
 
-    });
+});
