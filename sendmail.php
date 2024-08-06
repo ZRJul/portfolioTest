@@ -5,6 +5,16 @@ use PHPMailer\PHPMailer\Exception;
 require 'phpmailer/src/Exception.php';
 require 'phpmailer/src/PHPMailer.php';
 
+// Получаем порт из переменной окружения
+$port = getenv('PORT') ? getenv('PORT') : 3000;
+
+// Обрабатываем только POST-запросы
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    http_response_code(405);
+    echo json_encode(['message' => 'Method Not Allowed']);
+    exit;
+}
+
 $mail = new PHPMailer(true);
 $mail->CharSet = 'UTF-8';
 $mail->setLanguage('en', 'phpmailer/language');
